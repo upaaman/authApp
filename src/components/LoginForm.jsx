@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import "./SignupForm.css"
-import { useDispatch } from 'react-redux';
 import { supabase } from '../supaBase/Client';
 import { useNavigate } from 'react-router-dom';
 

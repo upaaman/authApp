@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import "./SignupForm.css"
-
 import { supabase } from '../supaBase/Client';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +13,7 @@ const SignupForm = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-console.log("handle submit is called")
+// console.log("handle submit is called")
     try {
       const { data, error } = await supabase.auth.signUp(
         {
