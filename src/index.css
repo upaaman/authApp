@@ -18,11 +18,11 @@
 }
 
 .welcome-name {
-  color: #7c3aed;
+  color: #623eba;
 }
 
 .logout-button {
-    background-color: #7c3aed;
+    background-color: #623eba;
     border-radius: 1rem;
     padding: 0.7rem;
     font-size: 1rem;
@@ -41,4 +41,17 @@
 }
 .welcome-email{
   color: #7c3aed;
+}
+
+
+/* .signup-page{
+  display: flex;
+  flex-direction: column;
+} */
+
+.main{
+  width: 50%;
+  height: 100vh;
+  background: white;
+
 }

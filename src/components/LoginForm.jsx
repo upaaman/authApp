@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useLoginHook } from '../hooks/useLoginHook';
+import { setUser } from '../redux/authSlice';
 
 
 
 
-const LoginForm = ({ setToken }) => {
+const LoginForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { onLogin } = useLoginHook();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,12 +17,19 @@ const LoginForm = ({ setToken }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+
         const res = await onLogin({ email, password });
-        if(res.message){
+
+        if (res.message) {
             setError(res.message)
-        }else{
-            console.log(res.user)
-            setToken(res.user)
+        } else {
+            // console.log(res)
+            dispatch(setUser({
+                name: res.user.user_metadata.name,
+                id: res.user.id,
+                email: res.user.user_metadata.email,
+                accessToken: res.session.access_token
+            }));
         }
 
     }

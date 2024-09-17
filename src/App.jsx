@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from 'react' 
+import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Success from './pages/Success'
 import NoPageFound from './pages/NoPageFound'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser } from './redux/authSlice'
 
 const App = () => {
-  const [token,setToken]=useState(null);
+  const user = useSelector(store => store.auth.user)
+  const dispatch = useDispatch();
 
 
-  if(token){
-    localStorage.setItem('token',JSON.stringify(token))
-  }
+
+
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
-      let data = JSON.parse(localStorage.getItem('token'))
-      // console.log(data)
-      setToken(data)
+    if (localStorage.getItem("userData")) {
+      let data = JSON.parse(localStorage.getItem("userData"))
+      dispatch(setUser(data));
     }
-    
   }, [])
-  
-  return (
-    <div >
-      <Routes>
-        <Route path='/' element={<Signup/>} />
-        <Route path='/*' element={<NoPageFound/>} />
-        <Route path='/login'  element={<Login setToken={setToken}/>} />
-       {token ? <Route path='/success' element={<Success token={token}/>} />:""}
 
-      </Routes>
-    </div>
-  )
+
+console.log(user)
+
+  if (user.authenticated) {
+    return <Success />
+  }
+  else {
+    return <Routes>
+      <Route path='/' element={<Signup />} />
+      <Route path='/*' element={<NoPageFound />} />
+      <Route path='/login' element={<Login />} />
+    </Routes>
+  }
+
 }
 
 export default App
