@@ -2,45 +2,52 @@ import React, { useState } from 'react'
 import "./SignupForm.css"
 import { supabase } from '../supaBase/Client';
 import { useNavigate } from 'react-router-dom';
+import { useSignupHook } from '../hooks/useSignupHook';
+
 
 
 
 const SignupForm = () => {
   const navigate=useNavigate();
+  const {onSignup} =useSignupHook();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [error,setError]=useState(null);
   const [password, setPassword] = useState("");
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-// console.log("handle submit is called")
-    try {
-      const { data, error } = await supabase.auth.signUp(
-        {
-          email,
-          password,
-          options: {
-            data: {
-              name,
-            }
-          }
-        }
-      )
-      if(error) throw error
-      alert("check your mail")
-    } catch (error) {
-      alert("error in signup")
+    const res=await onSignup({email,password,name})
+    if(res.message){
+      setError(res.message);
+    }else{
+      alert("Check your mail to confirm and then login!!")
     }
-
-
   }
+
+  const addDataToTable = async(data) => {
+
+    const email = data?.identity_data.email;
+    const name = data?.identity_data.name;
+    const password = "11111111";
+    const id=111111111;
+
+    console.log(email,name,password,id)
+console.log("currently printing the id",id)
+    const { error } = await supabase
+        .from('usersData')
+        .insert({id:id, Name:name,Email_Id: email,Password:password })
+        if(error) console.log(error.message)
+
+}
   return (
     <div className='main'>
       <div className="container">
-        <div className="form-container">
+        <div className="form-container  ">
           <div className="form-content">
-            <h1>SignUp</h1>
+            <h1>Create Account</h1>
             <p>Please enter your details to signup.</p>
+            {error!==null && <div>{error}</div>}
             <form onSubmit={handleFormSubmit}>
               <div>
                 <label htmlFor="name">Name</label>

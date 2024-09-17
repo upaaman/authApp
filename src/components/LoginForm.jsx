@@ -1,31 +1,30 @@
 import React, { useState } from 'react'
-// import "./SignupForm.css"
-import { supabase } from '../supaBase/Client';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useLoginHook } from '../hooks/useLoginHook';
 
 
 
-const LoginForm = () => {
+
+const LoginForm = ({ setToken }) => {
     const navigate = useNavigate();
+    const { onLogin } = useLoginHook();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            })
-
-            if (error) throw error
-            console.log("Hii i am logged in")
-            navigate('/success')
-        } catch (error) {
-            alert(error)
+        const res = await onLogin({ email, password });
+        if(res.message){
+            setError(res.message)
+        }else{
+            console.log(res.user)
+            setToken(res.user)
         }
+
     }
+
     return (
         <div className='main'>
             <div className="container">
@@ -33,6 +32,7 @@ const LoginForm = () => {
                     <div className="form-content">
                         <h1>Welcome Back!!</h1>
                         <p>Please enter your details to Login.</p>
+                        {error && <div>{error}</div>}
                         <form onSubmit={handleFormSubmit}>
 
                             <div>
@@ -50,6 +50,7 @@ const LoginForm = () => {
                                     type="password"
                                     id="password"
                                     placeholder="••••••••"
+                                    minLength={8}
                                     required
                                     onChange={(e) => setPassword(e.target.value)} />
                             </div>
