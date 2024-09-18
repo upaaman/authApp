@@ -4,9 +4,9 @@ import { supabase } from '../supaBase/Client';
 
 export const useSignupHook = () => {
     const dispatch = useDispatch();
-    
-    
-    const onSignup = async ({email,password,name}) => {
+
+
+    const onSignup = async ({ email, password, name }) => {
         // console.log("hi am logging the props",name)
         try {
             const { data, error } = await supabase.auth.signUp(
@@ -14,7 +14,7 @@ export const useSignupHook = () => {
                     email,
                     password,
                     options: {
-                       emailRedirectTo:"https://google.com",
+                        emailRedirectTo: "https://google.com",
                         data: {
                             name,
                         }

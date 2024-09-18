@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { setUserToNull } from '../redux/authSlice';
+import { useLogOutHook } from '../hooks/useLogOutHook';
 
 const Success = () => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const user=useSelector(store=>store.auth.user);
-  // console.log(user,"priting the redux data")
+  const {onLogOut}=useLogOutHook();
 
   const handleLogOut = () => {
-    dispatch(setUserToNull());
-    navigate('/')
+    onLogOut();
   }
 
   return (

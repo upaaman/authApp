@@ -4,13 +4,18 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         token: null,
-        user: {
-            id: null,
-            name: null,
-            email: null,
-            accessToken:null,
-            authenticated: false,
-        },
+        user: localStorage.getItem("userData") ?
+            JSON.parse(localStorage.getItem("userData"))
+            :
+            {
+                id: null,
+                name: null,
+                email: null,
+                accessToken: null,
+                authenticated: false,
+            },
+
+
     },
     reducers: {
         setUser: (state, action) => {
@@ -28,7 +33,7 @@ const authSlice = createSlice({
         },
         setUserToNull: (state, action) => {
             state.user.id = null
-            state.user.email =null
+            state.user.email = null
             state.user.name = null
             state.user.accessToken = null
             state.user.authenticated = false;
@@ -37,5 +42,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setUser,setUserToNull } = authSlice.actions;
+export const { setUser, setUserToNull } = authSlice.actions;
 export default authSlice.reducer;

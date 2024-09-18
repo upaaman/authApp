@@ -1,9 +1,15 @@
 import React from 'react'
 import LoginForm from "../components/LoginForm"
-const Login = ({setToken}) => {
+import BallPart from '../components/BallPart'
+import UntitledText from '../components/UntitledText'
+
+
+const Login = () => {
   return (
-    <div>
-        <LoginForm/>
+    <div className=' login-signup-page '>
+      <UntitledText />
+      <LoginForm />
+      <BallPart />
     </div>
   )
 }
