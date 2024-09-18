@@ -35,7 +35,7 @@ const SignupForm = () => {
               <h1 className='login-signup-title' >Create Account</h1>
               <p className='login-signup-title2' >Please enter your details to signup.</p>
             </div>
-            {error !== null && <div>{error}</div>}
+            {error !== null && <div className='error-text'>{error}</div>}
             <form className='form-data' onSubmit={handleFormSubmit}>
               <div>
                 <label htmlFor="name">Name</label>

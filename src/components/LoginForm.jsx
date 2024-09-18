@@ -44,7 +44,7 @@ const LoginForm = () => {
                             <h1 className=' login-signup-title '>Welcome Back</h1>
                             <p className='login-signup-title2'>Welcome back! Please enter your details.</p>
                         </div>
-                        {error && <div>{error}</div>}
+                        {error !== null && <div className='error-text'>{error}</div>}
                         <form className='form-data' onSubmit={handleFormSubmit}>
 
                             <div>
