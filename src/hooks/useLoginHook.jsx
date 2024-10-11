@@ -3,7 +3,7 @@ import { supabase } from '../supaBase/Client';
 import { setUser } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-
+// -------------------this hook is used to make the user LOG IN ------------------------------
 export const useLoginHook = () => {
     const dispatch = useDispatch();
     const navigate=useNavigate();

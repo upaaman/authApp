@@ -2,9 +2,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { supabase } from '../supaBase/Client';
 
 
-export const useSignupHook = () => {
-    const dispatch = useDispatch();
+// --------------------when the user SIGNUP this hook is activated-------------------------
 
+export const useSignupHook = () => {
 
     const onSignup = async ({ email, password, name }) => {
         // console.log("hi am logging the props",name)

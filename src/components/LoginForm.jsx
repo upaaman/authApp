@@ -5,26 +5,30 @@ import { useLoginHook } from '../hooks/useLoginHook';
 import { setUser } from '../redux/authSlice';
 import GoogleSignInButton from "./GoogleSignInButton"
 import CommanButton from "./CommanButton"
-
-
+import InputCustom from "./InputCustom"
 
 const LoginForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { onLogin } = useLoginHook();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [formData, setFormData] = useState({ email: '', password: '' });
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+// ----------------when we submit our form with all the details and submit then we trigger SIGNUP HOOk --------------------------
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
-        const res = await onLogin({ email, password });
+        const res = await onLogin({ email: formData.email, password: formData.password });
 
         if (res.message) {
             setError(res.message)
         } else {
-            // console.log(res)
             dispatch(setUser({
                 name: res.user.user_metadata.name,
                 id: res.user.id,
@@ -44,28 +48,27 @@ const LoginForm = () => {
                             <h1 className=' login-signup-title '>Welcome Back</h1>
                             <p className='login-signup-title2'>Welcome back! Please enter your details.</p>
                         </div>
+
+                        {/* -------------------if there is any warning or error we display it here-------------------------- */}
                         {error !== null && <div className='error-text'>{error}</div>}
+
                         <form className='form-data' onSubmit={handleFormSubmit}>
 
-                            <div>
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    required
-                                    onChange={(e) => setEmail(e.target.value)} />
-                            </div>
-                            <div>
-                                <label htmlFor="password">Password</label>
-                                <input
+                            <InputCustom
+                                title="Email"
+                                name="email"
+                                type="email"
+                                placeholder="Enter your mail"
+                                handleChange={handleChange}
+                            />
+
+                                <InputCustom
+                                    title="Password"
+                                    name="password"
                                     type="password"
-                                    id="password"
-                                    placeholder="••••••••"
-                                    minLength={8}
-                                    required
-                                    onChange={(e) => setPassword(e.target.value)} />
-                            </div>
+                                    placeholder="••••••••••"
+                                    handleChange={handleChange}
+                                />
                             <div className="remember-forgot">
                                 <div className="remember">
                                     <input type="checkbox" id="remember" />

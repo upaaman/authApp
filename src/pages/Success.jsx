@@ -1,18 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
-import { setUserToNull } from '../redux/authSlice';
+import { useSelector } from 'react-redux';
 import { useLogOutHook } from '../hooks/useLogOutHook';
 
 const Success = () => {
-  const navigate=useNavigate();
-  const dispatch=useDispatch();
   const user=useSelector(store=>store.auth.user);
   const {onLogOut}=useLogOutHook();
 
   const handleLogOut = () => {
+    // --------------custom hook for logging out the user---------------
     onLogOut();
   }
-
+  //---------------name and email of user shown with the redux state stored-------------------------- 
   return (
     <div className='success-container'>
       <div>Hey You logged in !!!</div>

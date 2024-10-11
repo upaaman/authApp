@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* ------------------- all the styling is wapped in this file only  ------------------------ */
 * {
   margin: 0;
   padding: 0;
@@ -273,7 +275,7 @@ input[type="text"] {
   color: red;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 750px) {
   .main {
    width: 100%;
   }

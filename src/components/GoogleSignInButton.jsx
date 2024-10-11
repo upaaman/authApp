@@ -1,5 +1,5 @@
 import React from 'react'
-
+// ----------------the signup and signin with google button is here with the logo in svg format-------------------------
 const GoogleSignInButton = ({title}) => {
     return (
         <button type="button" className="google-sign">

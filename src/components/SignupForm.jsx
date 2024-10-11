@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSignupHook } from '../hooks/useSignupHook';
 import CommanButton from './CommanButton';
 import GoogleSignInButton from './GoogleSignInButton';
+import InputCustom from './InputCustom';
 
 
 
@@ -11,14 +12,20 @@ import GoogleSignInButton from './GoogleSignInButton';
 const SignupForm = () => {
   const navigate = useNavigate();
   const { onSignup } = useSignupHook();
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [error, setError] = useState(null);
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const res = await onSignup({ email, password, name })
+    const res = await onSignup({ email:formData.email, password:formData.password, name:formData.name })
     if (res.message) {
       setError(res.message);
     } else {
@@ -37,33 +44,27 @@ const SignupForm = () => {
             </div>
             {error !== null && <div className='error-text'>{error}</div>}
             <form className='form-data' onSubmit={handleFormSubmit}>
-              <div>
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="text"
-                  placeholder="Enter your name"
-                  required
-                  onChange={(e) => setName(e.target.value)} />
-              </div>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Enter your email"
-                  required
-                  onChange={(e) => setEmail(e.target.value)} />
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="••••••••"
-                  required
-                  onChange={(e) => setPassword(e.target.value)} />
-              </div>
+              <InputCustom
+                title="Name"
+                name="name"
+                type="text"
+                placeholder="Enter your name"
+                handleChange={handleChange}
+              />
+              <InputCustom
+                title="Email"
+                name="email"
+                type="email"
+                placeholder="Enter your mail"
+                handleChange={handleChange}
+              />
+              <InputCustom
+                title="Password"
+                name="password"
+                type="password"
+                placeholder="••••••••••"
+                handleChange={handleChange}
+              />
               <div className="remember-forgot">
                 <div className="remember">
                   <input type="checkbox" id="remember" />

@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
+// --------------any page which the user is not allowed to see is here -------------------
 const NoPageFound = () => {
     const navigate = useNavigate();
     return (
